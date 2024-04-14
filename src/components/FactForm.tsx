@@ -50,6 +50,13 @@ const FactForm: React.FC = () => {
       setFactData({ id: 0, title: "", upvotes: "", date: "" });
     }
   };
+  const isFormValid = () => {
+    return (
+      factData.title.trim() !== "" &&
+      factData.upvotes.trim() !== "" &&
+      factData.date.trim() !== ""
+    );
+  };
 
   return (
     <Form onSubmit={handleSubmit} className="fact-form">
@@ -58,28 +65,28 @@ const FactForm: React.FC = () => {
         {state.editingFact ? "Edit Record" : "Add Record"}
       </Header>
       <Form.Input
-        label="Title"
-        placeholder="Enter title"
+        placeholder="Enter title..."
         name="title"
         value={factData.title}
         onChange={handleChange}
       />
       <Form.Input
-        label="Age"
-        placeholder="Enter upvotes"
+        placeholder="Enter upvotes number between 0 to 100..."
         name="upvotes"
         value={factData.upvotes}
         onChange={handleChange}
+        type="number"
+        min={0}
+        max={100}
       />
       <Form.Input
-        label="Date "
-        placeholder="Enter date"
+        placeholder="Enter date..."
         name="date"
         type="date"
         value={factData.date}
         onChange={handleChange}
       />
-      <Button primary type="submit">
+      <Button primary type="submit" disabled={!isFormValid()}>
         {state.editingFact ? "Save Edits" : "Add Date"}
       </Button>
     </Form>
